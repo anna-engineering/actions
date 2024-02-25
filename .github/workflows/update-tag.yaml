@@ -1,0 +1,44 @@
+name: Update Tag
+on  :
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Tag Name"
+        type       : string
+        required   : true
+  release:
+    types: [released]
+  push:
+    branches:
+      - main
+env :
+  TAG_NAME: ${{ github.event.inputs.tag_name || github.event.release.tag_name || 'v1' }}
+jobs:
+  job:
+    name: ${{ github.workflow }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Git Config
+        run: |
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+      - name: Git Tag
+        run: git tag -f $TAG_NAME
+      - name: Git Push
+        run: git push origin $TAG_NAME --force
+      - name: Git Tag
+        run: git tag -f $TAG_NAME
+      - name: Git Push
+        run: git push origin $TAG_NAME --force
+      - name: Git Tag
+        run: git tag -f latest
+      - name: Git Push
+        run: git push origin latest --force
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+permissions:
+  contents: write
