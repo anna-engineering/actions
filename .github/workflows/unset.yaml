@@ -1,0 +1,59 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        required: true
+      secret:
+        type: boolean
+        default: false
+      environment:
+        type: string
+      organization:
+        type: string
+    secrets:
+      GH_TOKEN:
+        required: true
+jobs:
+  unset-repository-variable:
+    if: ${{ !inputs.environment && !inputs.organization && !inputs.secret }}
+    uses: ./.github/workflows/unset-repository-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  unset-repository-secret:
+    if: ${{ !inputs.environment && !inputs.organization && inputs.secret }}
+    uses: ./.github/workflows/unset-repository-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  unset-environment-variable:
+    if: ${{ inputs.environment && !inputs.organization && !inputs.secret }}
+    uses: ./.github/workflows/unset-environment-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  unset-environment-secret:
+    if: ${{ inputs.environment && !inputs.organization && inputs.secret }}
+    uses: ./.github/workflows/unset-environment-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  unset-organization-variable:
+    if: ${{ !inputs.environment && inputs.organization && !inputs.secret }}
+    uses: ./.github/workflows/unset-organization-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  unset-organization-secret:
+    if: ${{ !inputs.environment && inputs.organization && inputs.secret }}
+    uses: ./.github/workflows/unset-organization-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
