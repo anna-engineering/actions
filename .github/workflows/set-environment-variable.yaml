@@ -1,0 +1,41 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        required: true
+      value:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
+    secrets:
+      GH_TOKEN:
+        required: true
+jobs:
+  set:
+    name: Set Variable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Isset Variable
+        run: |
+          gh api --method GET /repositories/${{ github.repository_id }}/environments/${{ inputs.environment }}/variables/${{ inputs.name }}
+          if [ $? -eq 0 ]; then
+            echo "ISSET=true" >> "$GITHUB_ENV"
+          fi
+        continue-on-error: true
+      - name: Create Variable
+        if: ${{ !env.ISSET }}
+        run: |
+          gh api --method POST /repositories/${{ github.repository_id }}/environments/${{ inputs.environment }}/variables \
+            -f name='${{ inputs.name }}' \
+            -f value="${{ inputs.value }}"
+      - name: Update Variable
+        if: ${{ env.ISSET }}
+        run: |
+          gh api --method PATCH /repositories/${{ github.repository_id }}/environments/${{ inputs.environment }}/variables/${{ inputs.name }} \
+            -f name='${{ inputs.name }}' \
+            -f value="${{ inputs.value }}"
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
