@@ -1,0 +1,82 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        type: string
+        required: true
+      value:
+        type: string
+        required: false
+      environment:
+        type: string
+      organization:
+        type: string
+      visibility: # only for organization (options: all, private, selected)
+        type: string
+        default: all
+        description: Choose a visibility (For organisation only)
+      selection: # only for organization when visibility=selected
+        type: string
+    secrets:
+      value:
+        type: string
+        required: false
+      GH_TOKEN:
+        required: true
+jobs:
+  set-repository-variable:
+    if: ${{ !inputs.environment && !inputs.organization && inputs.value }}
+    uses: ./.github/workflows/set-repository-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+      value: ${{ inputs.value }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  set-repository-secret:
+    if: ${{ !inputs.environment && !inputs.organization && !inputs.value }}
+    uses: ./.github/workflows/set-repository-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+    secrets:
+      value: ${{ secrets.value }}
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  set-environment-variable:
+    if: ${{ inputs.environment && !inputs.organization && inputs.value }}
+    uses: ./.github/workflows/set-environment-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+      value: ${{ inputs.value }}
+      environment: ${{ inputs.environment }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  set-environment-secret:
+    if: ${{ inputs.environment && !inputs.organization && !inputs.value }}
+    uses: ./.github/workflows/set-environment-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+      environment: ${{ inputs.environment }}
+    secrets:
+      value: ${{ secrets.value }}
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  set-organization-variable:
+    if: ${{ !inputs.environment && inputs.organization && inputs.value }}
+    uses: ./.github/workflows/set-organization-variable.yaml
+    with:
+      name: ${{ inputs.name }}
+      value: ${{ inputs.value }}
+      organization: ${{ inputs.organization }}
+      visibility: ${{ inputs.visibility }}
+      selection: ${{ inputs.selection }}
+    secrets:
+      GH_TOKEN: ${{ secrets.TOKEN }}
+  set-organization-secret:
+    if: ${{ !inputs.environment && inputs.organization && !inputs.value }}
+    uses: ./.github/workflows/set-organization-secret.yaml
+    with:
+      name: ${{ inputs.name }}
+      organization: ${{ inputs.organization }}
+      visibility: ${{ inputs.visibility }}
+      selection: ${{ inputs.selection }}
+    secrets:
+      value: ${{ secrets.value }}
+      GH_TOKEN: ${{ secrets.TOKEN }}
