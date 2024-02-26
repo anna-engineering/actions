@@ -6,7 +6,7 @@ on:
         required: true
       organization:
         type: string
-        required: true
+        required: false
     secrets:
       GH_TOKEN:
         required: true
