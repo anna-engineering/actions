@@ -23,39 +23,39 @@ jobs:
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-repository-secret:
     if: ${{ !inputs.environment && !inputs.organization && inputs.secret }}
     uses: ./.github/workflows/unset-repository-secret.yaml
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-environment-variable:
     if: ${{ inputs.environment && !inputs.organization && !inputs.secret }}
     uses: ./.github/workflows/unset-environment-variable.yaml
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-environment-secret:
     if: ${{ inputs.environment && !inputs.organization && inputs.secret }}
     uses: ./.github/workflows/unset-environment-secret.yaml
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-organization-variable:
     if: ${{ !inputs.environment && inputs.organization && !inputs.secret }}
     uses: ./.github/workflows/unset-organization-variable.yaml
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-organization-secret:
     if: ${{ !inputs.environment && inputs.organization && inputs.secret }}
     uses: ./.github/workflows/unset-organization-secret.yaml
     with:
       name: ${{ inputs.name }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
