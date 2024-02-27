@@ -9,8 +9,10 @@ on:
         default: false
       environment:
         type: string
+        required: false
       organization:
         type: string
+        required: false
     secrets:
       GH_TOKEN:
         required: true

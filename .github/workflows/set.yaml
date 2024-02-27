@@ -12,14 +12,17 @@ on:
         required: false
       environment:
         type: string
+        required: false
       organization:
         type: string
+        required: false
       visibility: # only for organization (options: all, private, selected)
         type: string
         default: all
         description: Choose a visibility (For organisation only)
       selection: # only for organization when visibility=selected
         type: string
+        required: false
     secrets:
       GH_TOKEN:
         required: true
