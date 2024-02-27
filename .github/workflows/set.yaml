@@ -7,6 +7,9 @@ on:
       value:
         type: string
         required: false
+      secret:
+        type: string
+        required: false
       environment:
         type: string
       organization:
@@ -18,13 +21,11 @@ on:
       selection: # only for organization when visibility=selected
         type: string
     secrets:
-      value:
-        required: false
       GH_TOKEN:
         required: true
 jobs:
   set-repository-variable:
-    if: ${{ !inputs.environment && !inputs.organization && inputs.value }}
+    if: ${{ !inputs.environment && !inputs.organization && inputs.value && !secret.value }}
     uses: ./.github/workflows/set-repository-variable.yaml
     with:
       name: ${{ inputs.name }}
@@ -32,7 +33,7 @@ jobs:
     secrets:
       GH_TOKEN: ${{ secrets.TOKEN }}
   set-repository-secret:
-    if: ${{ !inputs.environment && !inputs.organization && !inputs.value }}
+    if: ${{ !inputs.environment && !inputs.organization && !inputs.value && secret.value }}
     uses: ./.github/workflows/set-repository-secret.yaml
     with:
       name: ${{ inputs.name }}
@@ -40,7 +41,7 @@ jobs:
       value: ${{ secrets.value }}
       GH_TOKEN: ${{ secrets.TOKEN }}
   set-environment-variable:
-    if: ${{ inputs.environment && !inputs.organization && inputs.value }}
+    if: ${{ inputs.environment && !inputs.organization && inputs.value && !secret.value }}
     uses: ./.github/workflows/set-environment-variable.yaml
     with:
       name: ${{ inputs.name }}
@@ -49,7 +50,7 @@ jobs:
     secrets:
       GH_TOKEN: ${{ secrets.TOKEN }}
   set-environment-secret:
-    if: ${{ inputs.environment && !inputs.organization && !inputs.value }}
+    if: ${{ inputs.environment && !inputs.organization && !inputs.value && secret.value }}
     uses: ./.github/workflows/set-environment-secret.yaml
     with:
       name: ${{ inputs.name }}
@@ -58,7 +59,7 @@ jobs:
       value: ${{ secrets.value }}
       GH_TOKEN: ${{ secrets.TOKEN }}
   set-organization-variable:
-    if: ${{ !inputs.environment && inputs.organization && inputs.value }}
+    if: ${{ !inputs.environment && inputs.organization && inputs.value && !secret.value }}
     uses: ./.github/workflows/set-organization-variable.yaml
     with:
       name: ${{ inputs.name }}
@@ -69,7 +70,7 @@ jobs:
     secrets:
       GH_TOKEN: ${{ secrets.TOKEN }}
   set-organization-secret:
-    if: ${{ !inputs.environment && inputs.organization && !inputs.value }}
+    if: ${{ !inputs.environment && inputs.organization && !inputs.value && secret.value }}
     uses: ./.github/workflows/set-organization-secret.yaml
     with:
       name: ${{ inputs.name }}
