@@ -34,7 +34,7 @@ jobs:
       name: ${{ inputs.name }}
       value: ${{ inputs.value }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-repository-secret:
     if: ${{ !inputs.environment && !inputs.organization && !inputs.value && inputs.secret }}
     uses: ./.github/workflows/set-repository-secret.yaml
@@ -42,7 +42,7 @@ jobs:
       name: ${{ inputs.name }}
     secrets:
       value: ${{ secrets.value }}
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-environment-variable:
     if: ${{ inputs.environment && !inputs.organization && inputs.value && !inputs.secret }}
     uses: ./.github/workflows/set-environment-variable.yaml
@@ -51,7 +51,7 @@ jobs:
       value: ${{ inputs.value }}
       environment: ${{ inputs.environment }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-environment-secret:
     if: ${{ inputs.environment && !inputs.organization && !inputs.value && inputs.secret }}
     uses: ./.github/workflows/set-environment-secret.yaml
@@ -60,7 +60,7 @@ jobs:
       environment: ${{ inputs.environment }}
     secrets:
       value: ${{ secrets.value }}
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-organization-variable:
     if: ${{ !inputs.environment && inputs.organization && inputs.value && !inputs.secret }}
     uses: ./.github/workflows/set-organization-variable.yaml
@@ -71,7 +71,7 @@ jobs:
       visibility: ${{ inputs.visibility }}
       selection: ${{ inputs.selection }}
     secrets:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-organization-secret:
     if: ${{ !inputs.environment && inputs.organization && !inputs.value && inputs.secret }}
     uses: ./.github/workflows/set-organization-secret.yaml
@@ -82,4 +82,4 @@ jobs:
       selection: ${{ inputs.selection }}
     secrets:
       value: ${{ secrets.value }}
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
