@@ -52,7 +52,7 @@ jobs:
     uses: ./.github/workflows/unset-organization-variable.yaml
     with:
       name: ${{ inputs.name }}
-      organization: ${{ inputs.organization == true ? '' : inputs.organization }}
+      organization: inputs.organization
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-organization-secret:
@@ -60,6 +60,6 @@ jobs:
     uses: ./.github/workflows/unset-organization-secret.yaml
     with:
       name: ${{ inputs.name }}
-      organization: ${{ inputs.organization == true ? '' : inputs.organization }}
+      organization: inputs.organization
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
