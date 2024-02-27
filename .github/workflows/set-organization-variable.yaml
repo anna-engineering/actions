@@ -7,6 +7,9 @@ on:
       value:
         type: string
         required: true
+      organization:
+        type: string
+        default: ""
       visibility:
         type: string
         required: true
@@ -15,7 +18,7 @@ on:
         type: string
         default: ""
     secrets:
-      TOKEN:
+      GH_TOKEN:
         required: true
 jobs:
   set:
@@ -44,4 +47,4 @@ jobs:
             -f value="${{ inputs.value }}" \
             -f visibility="${{ inputs.visibility }}"
     env:
-      GH_TOKEN: ${{ secrets.TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
