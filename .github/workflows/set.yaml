@@ -40,8 +40,8 @@ jobs:
     uses: ./.github/workflows/set-repository-secret.yaml
     with:
       name: ${{ inputs.name }}
+      value: ${{ inputs.secret }}
     secrets:
-      value: ${{ secrets.value }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-environment-variable:
     if: ${{ inputs.environment && !inputs.organization && inputs.value && !inputs.secret }}
@@ -57,9 +57,9 @@ jobs:
     uses: ./.github/workflows/set-environment-secret.yaml
     with:
       name: ${{ inputs.name }}
+      value: ${{ inputs.secret }}
       environment: ${{ inputs.environment }}
     secrets:
-      value: ${{ secrets.value }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   set-organization-variable:
     if: ${{ !inputs.environment && inputs.organization && inputs.value && !inputs.secret }}
@@ -77,9 +77,9 @@ jobs:
     uses: ./.github/workflows/set-organization-secret.yaml
     with:
       name: ${{ inputs.name }}
+      value: ${{ inputs.secret }}
       organization: ${{ inputs.organization }}
       visibility: ${{ inputs.visibility }}
       selection: ${{ inputs.selection }}
     secrets:
-      value: ${{ secrets.value }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
