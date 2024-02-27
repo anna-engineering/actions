@@ -19,7 +19,6 @@ on:
         type: string
     secrets:
       value:
-        type: string
         required: false
       GH_TOKEN:
         required: true
