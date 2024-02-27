@@ -36,6 +36,7 @@ jobs:
     uses: ./.github/workflows/unset-environment-variable.yaml
     with:
       name: ${{ inputs.name }}
+      environment: ${{ inputs.environment }}
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-environment-secret:
@@ -43,6 +44,7 @@ jobs:
     uses: ./.github/workflows/unset-environment-secret.yaml
     with:
       name: ${{ inputs.name }}
+      environment: ${{ inputs.environment }}
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-organization-variable:
@@ -50,6 +52,7 @@ jobs:
     uses: ./.github/workflows/unset-organization-variable.yaml
     with:
       name: ${{ inputs.name }}
+      organization: ${{ inputs.organization == true ? '' : inputs.organization }}
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
   unset-organization-secret:
@@ -57,5 +60,6 @@ jobs:
     uses: ./.github/workflows/unset-organization-secret.yaml
     with:
       name: ${{ inputs.name }}
+      organization: ${{ inputs.organization == true ? '' : inputs.organization }}
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
